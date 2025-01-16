@@ -1,7 +1,4 @@
 import cmd
-import shells.admin
-import shells.user
-import shells.user_adm
 from user.manager import User
 import shells
 
