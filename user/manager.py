@@ -1,5 +1,4 @@
-import mysql.connector
-from mysql.connector import Error
+from database.manager import Database
 
 class User:
     _instance = None
@@ -13,26 +12,12 @@ class User:
         
 
     def __init__(self):
-        self.connection = None
-        self._connect_db()
+        self.db = Database()
         
-    def _connect_db(self):
-        """Connect to the remote database"""
-        try:
-            self.connection = mysql.connector.connect(
-                host="sql.freedb.tech",
-                user="freedb_mikeSm_",
-                password="kSyK@amWU%79CMm",
-                database="freedb_mikeSm"
-            )
-            if self.connection.is_connected():
-                print("Connected...")
-        except Error as e:
-            print(f"Error while connecting to the remote database: {e}")
 
     def login(self, username, password):
         """Authenticate the user"""
-        cursor =self.connection.cursor()
+        cursor = self.db.get_connection().cursor()
 
         cursor.execute("select * from users where username = %s and password = %s", (username, password))
 
@@ -56,6 +41,6 @@ class User:
     
     def close_db_connection(self):
         """Close remote database connection"""
-        if self.connection and self.connection.is_connected():
-            self.connection.close()
+        if self.db.get_connection() and self.db.get_connection().is_connected():
+            self.db.get_connection().close()
             print("Closed...")
