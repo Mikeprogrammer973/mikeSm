@@ -1,33 +1,15 @@
 from database.manager import Database
 
 class User:
-    _instance = None
-    _logged_user = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__new__(cls, *args, **kwargs)
-        else:
-            return cls._instance
-        
 
     def __init__(self):
+        self._logged_user = None
         self.db = Database()
         
 
-    def login(self, username, password):
+    def login(self, username, password, mode):
         """Authenticate the user"""
-        cursor = self.db.get_connection().cursor()
-
-        cursor.execute("select * from users where username = %s and password = %s", (username, password))
-
-        user = cursor.fetchone()
-
-        if user:
-            self._logged_user = {"name": user[0], "username": user[1]}
-            print(f"\nWelcome back, {self._logged_user['name']}!\n")
-        else:
-            print("\nInvalid password or username!\n")
+        return True
 
     def logout(self):
         """Disconnect the current logged user"""

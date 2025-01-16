@@ -15,8 +15,8 @@ class Database:
     def struct(self):
         models.Base.metadata.create_all(self._engine)
 
-    def create_test_u(self):
-        query = sqlalchemy.insert(models.Store).values(name="Betonel Lasalle", location="Lasalle", code="8483", manager=None)
+    def create(self, model, **values):
+        query = sqlalchemy.insert(model).values(**values)
         return self._session.execute(query)
 
 

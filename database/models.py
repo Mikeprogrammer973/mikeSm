@@ -22,9 +22,11 @@ class Store(Base):
     code = Column(String)
     email = Column(String)
     manager = Column(Integer, ForeignKey("users.id"))
+    last_backup = Column(Integer, ForeignKey("backups.id"))
     users = relationship("User", back_populates='store')
     pallets = relationship("Pallet", back_populates='store')
     v_equipments = relationship("VerifiableEquipment", back_populates='store')
+    backups = relationship("Backup", back_populates="store")
 
 class User(Base):
     __tablename__ = "users"
@@ -76,5 +78,14 @@ class VerificationLog(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     verified_at = Column(Date)
     exp_at = Column(Date)
+    v_equipment_id = Column(Integer, ForeignKey("v_equipments.name"))
     v_equipment = relationship("VerifiableEquipment", back_populates="verification_logs")
     verified_by = Column(Integer, ForeignKey("users.id"))
+
+class Backup(Base):
+    __tablename__ = "backups"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    generated_at = Column(Date)
+    store_id = Column(Integer, ForeignKey("stores.id"))
+    store = relationship("Store", back_populates="backups")
