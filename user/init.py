@@ -1,3 +1,4 @@
+from . import base_controller
 
-class Init:
+class Init(base_controller.BaseController):
    pass
