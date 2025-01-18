@@ -1,5 +1,5 @@
 import os
-from shells.init import InitShell
+from shells.init_shell import InitShell
 
 if __name__ == "__main__":
     InitShell().cmdloop()
