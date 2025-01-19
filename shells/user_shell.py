@@ -1,13 +1,16 @@
-import cmd 
+from shells.base_shell import BaseShell
+from controllers.user_controller import UserController
+from controllers.user_admin_controller import UserAdminController
+from controllers.adm_controller import AdminController
 
-class UserShell(cmd.Cmd):
-    intro = "Welcome to MIKESM, type 'help' or '?' to get a list of all the commands.\n"
-    prompt= f"$__mikeSm__user> "
+class UserShell(BaseShell):
 
-    def do_exit(self, arg):
-        "End the session"
-        return True
+    def __init__(self, controller: UserController | UserAdminController | AdminController, completekey = "tab", stdin = None, stdout = None):
+        super().__init__(completekey, stdin, stdout)
+        self._controller = controller
+        self.prompt= f"$__mikeSm__{self._controller.get_logged_user().username}> "
 
-    def do_cls(self, arg):
-        "Clear the console"
-        print("\033c", end="")
+        print(self.get_controller())
+
+    def get_controller(self):
+        return self._controller

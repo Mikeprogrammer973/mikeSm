@@ -1,0 +1,1 @@
+# verifiable equipments management shell
