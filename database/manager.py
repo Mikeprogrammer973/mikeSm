@@ -1,5 +1,6 @@
 from sqlalchemy import Insert, Select, Update, Delete, create_engine, Result
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
+import sqlalchemy
 from . import models
 
 class Database:
@@ -13,8 +14,14 @@ class Database:
 
 
     def struct(self):
-        # models.Base.metadata.drop_all(self._engine)
         models.Base.metadata.create_all(self._engine)
+
+    def reset(self):
+        models.Base.metadata.drop_all(self._engine)
+
+    def clear_table(self, model):
+        self._session.query(model).delete()
+        return True
 
     def execute(self, query: Insert | Select | Update | Delete) -> Result:
         return self._session.execute(query)

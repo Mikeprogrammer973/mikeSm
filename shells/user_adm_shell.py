@@ -1,4 +1,7 @@
 from . import user_shell
 
 class UserAdmShell(user_shell.UserShell):
-    prompt= f"$__mikeSm__user_adm> "
+    
+    def do_insert(self):
+        """Register a new user or verifiable equipment."""
+        pass

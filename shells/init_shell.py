@@ -9,7 +9,7 @@ class InitShell(BaseShell):
 
     def do_auth(self, args):
         """Authenticate the user.
-            Syntax: auth <username> <password> <mode>(--d | --m | --a)
+            Syntax: auth <username> <password> <--d|--m|--a>
         """
         try:
             username, password, mode = str(args).split(' ')
